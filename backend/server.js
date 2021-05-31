@@ -2,13 +2,16 @@ const express = require('express');
 const app = express();
 const Pool = require('./mysql/pool');
 const Mydb = require('./mysql/mydb');
+const UserRouter = require('./router/user');
 
 const PORT = process.env.PORT || 5000;
-const pool = new Pool();
-const mydb = new Mydb(pool);
 
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use('/api/users', UserRouter);
 
+/*
 app.get('/dbtest/:userName', (req, res) => {
     let userName = req.params.userName;
     mydb.execute( conn => {
@@ -19,11 +22,8 @@ app.get('/dbtest/:userName', (req, res) => {
         });
     })
 });
+*/
 
 app.listen(PORT, () => 
     console.log(`server is running on http://localhost:${PORT}`)
 );
-
-module.exports = {
-    Mydb
-}

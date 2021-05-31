@@ -1,6 +1,7 @@
 const mysql   = require("mysql"),
       Promise = require("bluebird");
       dbInfo = require('../Config/key');
+      const Mydb = require('./mydb');
 
 Promise.promisifyAll(mysql);
 Promise.promisifyAll(require("mysql/lib/Connection").prototype);
@@ -17,7 +18,7 @@ const DB_INFO = {
 };
 
 
-module.exports = class {
+class Pool {
     constructor(dbinfo) {
       dbinfo = dbinfo || DB_INFO;
       this.pool = mysql.createPool(dbinfo);
@@ -37,4 +38,8 @@ module.exports = class {
       });
     }
   };
-  
+
+let pool = new Pool();
+const mydb = new Mydb(pool);
+
+module.exports = mydb;
