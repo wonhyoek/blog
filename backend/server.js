@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const Pool = require('./mysql/pool');
-const Mydb = require('./mysql/mydb');
 const UserRouter = require('./router/user');
 
 const PORT = process.env.PORT || 5000;

@@ -1,11 +1,6 @@
-const mysql   = require("mysql"),
-      Promise = require("bluebird");
+const mysql   = require("mysql2/promise"),
       dbInfo = require('../Config/key');
-      const Mydb = require('./mydb');
 
-Promise.promisifyAll(mysql);
-Promise.promisifyAll(require("mysql/lib/Connection").prototype);
-Promise.promisifyAll(require("mysql/lib/Pool").prototype);
 
 const DB_INFO = {
   host     : dbInfo.DB_HOST,
@@ -18,28 +13,4 @@ const DB_INFO = {
 };
 
 
-class Pool {
-    constructor(dbinfo) {
-      dbinfo = dbinfo || DB_INFO;
-      this.pool = mysql.createPool(dbinfo);
-    }
-  
-    connect() {
-      return this.pool.getConnectionAsync().disposer(conn => {
-        return conn.release();
-      });
-    }
-  
-    end() {
-      this.pool.end( function(err) {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>> End of Pool!!");
-        if (err)
-          console.log("ERR pool ending!!");
-      });
-    }
-  };
-
-let pool = new Pool();
-const mydb = new Mydb(pool);
-
-module.exports = mydb;
+module.exports = mysql.createPool(DB_INFO);

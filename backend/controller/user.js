@@ -1,16 +1,45 @@
-const Mydb = require('../mysql/mydb');
-const Promise = require('bluebird');
-const mydb = require('../mysql/pool');
+const Pool = require('../mysql/pool');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     
+    const email = req.body.email;
+    const userName = req.body.userName;
+    const password = req.body.password;
+
     const checkEmail = 'select * from User where email=?;',
           checkUsername = 'select * from User where userName=?;'
-          createUser = 'insert into User(email, userName, password) values(?, ?, ?);'
+          createUserQuery = 'insert into User(email, userName, password) values(?, ?, ?);'
     
+    try {       
+        const validateEmail = await Pool.query(checkEmail, [email]);
+        const validateUsername = await Pool.query(checkUsername, [userName]);
+
+        if (validateUsername[0][0] !== undefined && validateEmail[0][0] !== undefined) {
+            res.json({success: false, message: "이메일과 닉네임이 이미 사용중입니다."})
+        } else if (validateUsername[0][0] !== undefined) {
+            res.json({success: false, message: "닉네임이 이미 사용중입니다."})
+        } else if (validateEmail[0][0] !== undefined) {
+            res.json({success: false, message: "이메일이 이미 사용중입니다."})
+        }
+
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        
+        const createUser = await Pool.query(createUserQuery, [email, userName, hashedPassword]);
+        
+        res.json({success: true, data: createUser[0].affectedRows});
+        Pool.end();
+
+    } catch (e) {
+        res.json({success: false, error: e});
+        Pool.end();
+    }
+    
+}
+
+/* 
     mydb.execute( conn => {
         Promise.all([
             conn.queryAsync(checkEmail, [req.body.email]),
@@ -35,4 +64,4 @@ exports.create = (req, res) => {
             }
         })
     })
-}
+*/
