@@ -14,15 +14,12 @@ module.exports = async (req, res, next) => {
         , [token, decoded]);
         if(confirmUser[0][0] === undefined){
             res.json({success: false, message: "토큰과 일치하는 회원이 없습니다."})
-            Pool.end();
         } else {
             req.user = confirmUser[0][0];
             next();
-            Pool.end();
         }
 
     } catch (error) {
         next(error);
-        Pool.end();
     }
 }
