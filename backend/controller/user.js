@@ -19,20 +19,20 @@ exports.create = async (req, res, next) => {
         const validateUsername = await Pool.query(checkUsername, [userName]);
 
         if (validateUsername[0][0] !== undefined && validateEmail[0][0] !== undefined) {
-            res.json({success: false, message: "이메일과 닉네임이 이미 사용중입니다."})
+            res.status(400).json({success: false, message: "이메일과 닉네임이 이미 사용중입니다."})
 
         } else if (validateUsername[0][0] !== undefined) {
-            res.json({success: false, message: "닉네임이 이미 사용중입니다."})
+            res.status(400).json({success: false, message: "닉네임이 이미 사용중입니다."})
 
         } else if (validateEmail[0][0] !== undefined) {
-            res.json({success: false, message: "이메일이 이미 사용중입니다."})
+            res.status(400).json({success: false, message: "이메일이 이미 사용중입니다."})
 
         }
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const createUser = await Pool.query(createUserQuery, [email, userName, hashedPassword]);
         
-        res.json({success: true, data: createUser[0].affectedRows});
+        res.status(200).json({success: true, data: createUser[0].affectedRows});
 
     } catch (e) {
         next(e);
@@ -49,9 +49,8 @@ exports.login =  async (req, res, next) => {
     try {
         
         const confirmUser = await Pool.query('select * from User where email=?', [email]);
-        console.log(confirmUser);
         if(confirmUser[0][0] === undefined){
-            res.json({success: false, message: "가입된 이메일이 존재하지 않습니다."});
+            res.status(400).json({success: false, message: "가입된 이메일이 존재하지 않습니다."});
         }
 
 
@@ -61,11 +60,12 @@ exports.login =  async (req, res, next) => {
             Pool.query('update User set token=? where username=?', [token, confirmUser[0][0].username])
             .then(() => {
                 res
+                .status(200)
                 .cookie("x_auth", token)
                 .json({success: true, });
             })
         } else {
-            res.json({success: false, message: "비밀번호가 맞지 않습니다."});
+            res.status(400).json({success: false, message: "비밀번호가 맞지 않습니다."});
         }
 
 
@@ -79,10 +79,21 @@ exports.login =  async (req, res, next) => {
 exports.auth = async (req, res, next) => {
     
     const user = req.user;
-    
-    if(!user) {
-        res.json({ success: false })
-    }
 
-    res.json({success: true, user});
+    res.status(200).json({success: true, user});
+}
+
+
+exports.logout = async (req, res, next) => {
+    
+    const username = req.user.username;
+
+    Pool.query('update User set token=? where username=?', ["", username])
+    .then(() => {
+        res.status(200).json({success: true});
+    })
+    .catch(err => {
+        next(err);
+    });
+    
 }
