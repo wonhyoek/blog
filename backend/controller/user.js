@@ -19,13 +19,13 @@ exports.create = async (req, res, next) => {
         const validateUsername = await Pool.query(checkUsername, [userName]);
 
         if (validateUsername[0][0] !== undefined && validateEmail[0][0] !== undefined) {
-            res.status(400).json({success: false, message: "이메일과 닉네임이 이미 사용중입니다."})
+            res.status(200).json({success: false, message: "이메일과 닉네임이 이미 사용중입니다."})
 
         } else if (validateUsername[0][0] !== undefined) {
-            res.status(400).json({success: false, message: "닉네임이 이미 사용중입니다."})
+            res.status(200).json({success: false, message: "닉네임이 이미 사용중입니다."})
 
         } else if (validateEmail[0][0] !== undefined) {
-            res.status(400).json({success: false, message: "이메일이 이미 사용중입니다."})
+            res.status(200).json({success: false, message: "이메일이 이미 사용중입니다."})
 
         }
 
@@ -50,7 +50,7 @@ exports.login =  async (req, res, next) => {
         
         const confirmUser = await Pool.query('select * from User where email=?', [email]);
         if(confirmUser[0][0] === undefined){
-            res.status(400).json({success: false, message: "가입된 이메일이 존재하지 않습니다."});
+            res.status(200).json({success: false, message: "가입된 이메일이 존재하지 않습니다."});
         }
 
 
@@ -65,7 +65,7 @@ exports.login =  async (req, res, next) => {
                 .json({success: true, });
             })
         } else {
-            res.status(400).json({success: false, message: "비밀번호가 맞지 않습니다."});
+            res.status(200).json({success: false, message: "비밀번호가 맞지 않습니다."});
         }
 
 
