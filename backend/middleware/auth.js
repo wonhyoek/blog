@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
 
     const token = req.cookies.x_auth;
     if(!token){
-        res.status(400).json({isAuth: false, message: "토큰을 넣어야 합니다."});
+        res.json({isAuth: false, message: "토큰을 넣어야 합니다."});
     }
     try {
         
@@ -13,13 +13,13 @@ module.exports = async (req, res, next) => {
         const confirmUser = await Pool.query('select * from User where token=? and username=?'
         , [token, decoded]);
         if(confirmUser[0][0] === undefined){
-            res.status(400).json({isAuth: false, message: "토큰과 일치하는 회원이 없습니다."})
+            res.json({isAuth: false, message: "토큰과 일치하는 회원이 없습니다."})
         } else {
             req.user = confirmUser[0][0];
             next();
         }
 
     } catch (error) {
-        next(error);
+        next(error)
     }
 }

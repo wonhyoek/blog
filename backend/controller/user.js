@@ -51,7 +51,7 @@ exports.login =  async (req, res, next) => {
         
         const confirmUser = await Pool.query('select * from User where email=?', [email]);
         if(confirmUser[0][0] === undefined){
-            res.json({success: false, message: "가입된 이메일이 존재하지 않습니다."});
+            res.json({success: false, isAuth: false, message: "가입된 이메일이 존재하지 않습니다."});
         }
 
 
@@ -62,10 +62,10 @@ exports.login =  async (req, res, next) => {
             .then(() => {
                 res
                 .cookie("x_auth", token)
-                .json({success: true});
+                .json({success: true, isAuth: true});
             })
         } else {
-            res.json({success: false, message: "비밀번호가 맞지 않습니다."});
+            res.json({success: false, isAuth: false, message: "비밀번호가 맞지 않습니다."});
         }
 
 
@@ -80,7 +80,7 @@ exports.auth = async (req, res, next) => {
     
     const user = req.user;
 
-    res.json({success: true, user});
+    res.json({success: true, isAuth: true, user});
 }
 
 
@@ -90,7 +90,7 @@ exports.logout = async (req, res, next) => {
 
     Pool.query('update User set token=? where username=?', ["", username])
     .then(() => {
-        res.json({success: true});
+        res.json({succecs: true, isAuth: false});
     })
     .catch(err => {
         next(err);
