@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const Pool = require('./mysql/pool');
 const UserRouter = require('./router/user');
+const FeedRouter = require('./router/feed');
 
 const PORT = process.env.PORT || 5000;
 
@@ -15,11 +16,12 @@ app.use(cors());
 
 
 app.use('/api/users', UserRouter);
+app.use('/api/feeds', FeedRouter);
 
 
 
 app.use((error, req, res, next) => {
-    res.status(500).json({success: false, message: error.message});
+    res.json({success: false, message: error.message});
 })
 
 
