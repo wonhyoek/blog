@@ -12,13 +12,9 @@ exports.create = async (req, res, next) => {
             'insert into Feed(author, title, content) values(?, ?, ?)',
             [user, title, content]
         );
-        const findFeed = await Pool.query(
-            'select * from Feed where id=?',
-            [createFeed[0].insertId]
-        );
-        
-        
-        const feedId = findFeed[0][0].id;
+        const feedId = createFeed[0].insertId;
+
+
         res.json({success: true, feedId});
 
 
@@ -34,10 +30,66 @@ exports.read = async (req, res, next) => {
         
         const findFeeds = await Pool.query('select * from Feed');
         const feeds = findFeeds[0];
-        res.json({success: true, feeds})
+
+        res.json({success: true, feeds});
 
     } catch (error) {
         next(error)
     }
 
+}
+
+exports.readById = async (req, res, next) => {
+
+    const feedId = req.params.id;
+
+    try {
+        
+        const findFeedById = await Pool.query('select * from Feed where id = ?', [feedId]);
+        const feed = findFeedById[0][0];
+
+        if(feed){
+            res.json({success: true, feed});
+        } else {
+            res.json({success: false});
+        }
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+exports.update = async (req, res, next) => {
+    
+    const feedId = req.params.id;
+    const title = req.body.title;
+    const content = req.body.content;
+
+    try {
+        
+        const updateFeed = await Pool.query(
+            'update Feed set title = ?, content = ? where id = ?', 
+            [title, content, feedId]
+        );
+        res.json({success: true});
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.delete = async (req, res, next) => {
+    
+    const feedId = req.params.id;
+    
+    try {
+        const deleteFeed = await Pool.query(
+            'delete from Feed where id = ?',
+            [feedId]
+        );
+        res.json({success: true});
+    } catch (error) {
+        next(error);
+    }
 }
