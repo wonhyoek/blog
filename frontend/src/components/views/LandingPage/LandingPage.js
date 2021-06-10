@@ -6,7 +6,7 @@ import './LandingPage.css';
 
 export default () => {
     
-    const feeds = useSelector(state => state.feed);
+    const feedsInReducer = useSelector(state => state.feed);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -15,20 +15,22 @@ export default () => {
 
     }, []);
 
-    const feedsInReducer = feeds.feeds;
+    const feeds = feedsInReducer.feeds;
 
-    const renderFeeds = feedsInReducer && feedsInReducer.map((feed, index) => {
+    const renderFeeds = feeds && feeds.map((feed, index) => {
         return (
-            <div className = 'feed_container' key = {index}>
-                <div className = 'feed_author'>
-                    <img className = 'feed_author_img' src = {`http://localhost:5000/${feed.userimage}`}/>
-                    <p>{feed.author}</p>
+            <a href = {`/feeds/${feed.id}`} style = {{textDecoration: 'none', color: 'black'}} key = {index}>
+                <div className = 'feed_container'>
+                    <div className = 'feed_author'>
+                        <img className = 'feed_author_img' src = {`http://localhost:5000/${feed.userimage}`}/>
+                        <p>{feed.author}</p>
+                    </div>
+                    <div className = 'feed'>
+                        <h5>{feed.title}</h5>
+                        <div>{feed.content}</div>
+                    </div>
                 </div>
-                <div className = 'feed'>
-                    <h5>{feed.title}</h5>
-                    <div>{feed.content}</div>
-                </div>
-            </div>
+            </a>
         )
     })
     

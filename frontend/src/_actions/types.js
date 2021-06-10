@@ -6,3 +6,4 @@ export const UPLOAD_USER_IMAGE = "UPLOAD_USER_IMAGE"
 export const UPDATE_USER_IMAGE = "UPDATE_USER_IMAGE"
 
 export const GET_FEEDS = "GET_FEEDS";
+export const GET_FEED_BY_ID = "GET_FEED_BY_ID";

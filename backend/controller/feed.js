@@ -29,7 +29,7 @@ exports.read = async (req, res, next) => {
     try {
         
         const findFeeds = await Pool.query(
-            'select f.title, f.content, u.userimage, f.author from Feed f inner join User u on u.username = f.author;'
+            'select f.id, f.title, f.content, u.userimage, f.author from Feed f inner join User u on u.username = f.author;'
         );
         
         const feeds = findFeeds[0];
@@ -48,7 +48,10 @@ exports.readById = async (req, res, next) => {
 
     try {
         
-        const findFeedById = await Pool.query('select * from Feed where id = ?', [feedId]);
+        const findFeedById = await Pool.query(
+            'select f.id, f.title, f.content, u.userimage, f.author from Feed f inner join User u on u.username = f.author where f.  id = ?', 
+            [feedId]
+        );
         const feed = findFeedById[0][0];
 
         if(feed){
