@@ -28,7 +28,10 @@ exports.read = async (req, res, next) => {
     
     try {
         
-        const findFeeds = await Pool.query('select * from Feed');
+        const findFeeds = await Pool.query(
+            'select f.title, f.content, u.userimage, f.author from Feed f inner join User u on u.username = f.author;'
+        );
+        
         const feeds = findFeeds[0];
 
         res.json({success: true, feeds});

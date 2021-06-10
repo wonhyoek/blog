@@ -1,0 +1,21 @@
+.feed_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.feed_author {
+    flex: 1;
+    margin-top: 60px;
+}
+
+.feed {
+    flex: 5;
+    margin-left: 70px;
+}
+
+.feed_author_img {
+    height: 50px;
+    width: 50px;
+}
