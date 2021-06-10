@@ -3,7 +3,9 @@ import {
     LOGIN_USER,
     REGISTER_USER,
     LOGOUT_USER,
-    AUTH_USER
+    AUTH_USER,
+    UPLOAD_USER_IMAGE,
+    UPDATE_USER_IMAGE
 } from "./types";
 
 export const loginUser = (dataToSubmit) => {
@@ -42,6 +44,27 @@ export const auth = () => {
 
     return {
         type: AUTH_USER,
+        payload: request
+    }
+}
+
+export const uploadUserimage = (dataToSubmit, config) => {
+    const request = axios.post('/api/users/profile-image', dataToSubmit.formData, dataToSubmit.config)
+        .then(res => res.data);
+
+    return {
+        type: UPLOAD_USER_IMAGE,
+        payload: request
+    }
+}
+
+
+export const updateUserimage = (dataToSubmit) => {
+    const request = axios.put('/api/users/profile-image', dataToSubmit)
+        .then(res => res.data);
+
+    return {
+        type: UPDATE_USER_IMAGE,
         payload: request
     }
 }

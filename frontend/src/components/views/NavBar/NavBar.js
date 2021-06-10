@@ -52,10 +52,19 @@ export default () => {
                             </a>
                     </div>
                 ) : (
+                    <div style = {{display: 'flex', justifyContent: "center", 
+                        alignItems: 'center', flexDirection: 'row', padding: "0px 20px"}}
+                    >
+                        <a href = '/userProfile' style = {{padding: "0px 20px", textDecoration: 'none', color: 'black'}}>
+                            Profile
+                        </a>
                         <div style = {{padding: "0px 20px"}} onClick = {onSignOutHandler}>
                             Sign Out
                         </div>
+                    </div>
                 )}
         </div>
     )
 }
+
+

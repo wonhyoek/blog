@@ -14,6 +14,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors());
 
+app.use('/upload', express.static('upload'));
+
 
 app.use('/api/users', UserRouter);
 app.use('/api/feeds', FeedRouter);
