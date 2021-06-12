@@ -7,3 +7,6 @@ export const UPDATE_USER_IMAGE = "UPDATE_USER_IMAGE"
 
 export const GET_FEEDS = "GET_FEEDS";
 export const GET_FEED_BY_ID = "GET_FEED_BY_ID";
+export const DELETE_FEED = "DELETE_FEED";
+export const UPDATE_FEED = "UPDATE_FEED";
+export const CREATE_FEED = "CREATE_FEED";
