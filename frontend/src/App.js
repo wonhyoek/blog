@@ -6,6 +6,7 @@ import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 import UserProfile from "./components/views/UserProfile/UserProfile";
 import FeedDetailPage from './components/views/FeedDetailPage/FeedDetailPage';
 import NavBar from "./components/views/NavBar/NavBar";
+import UploadPage from "./components/views/UploadPage/UploadPage";
 import Auth from "./hoc/auth";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route exact path = '/register' component = {Auth(RegisterPage, false)}/>
             <Route exact path = '/userProfile' component = {Auth(UserProfile, true)}/>
             <Route exact path = '/feeds/:id' component = {Auth(FeedDetailPage, null)}/>
+            <Route exact path = '/upload' component = {Auth(UploadPage, true)}/>
           </Switch>
         </div>
       </Router>

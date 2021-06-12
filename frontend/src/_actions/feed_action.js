@@ -30,9 +30,10 @@ export const getFeedById = (dataToSubmit) => {
 }
 
 
-export const deleteFeed = () => {
-    const request = axios.delete('/api/feeds/:id')
+export const deleteFeed = (id) => {
+    const request = axios.delete(`/api/feeds/${id}`)
         .then( res => res.data );
+        console.log(request)
 
     return {
         type: DELETE_FEED,
@@ -41,9 +42,10 @@ export const deleteFeed = () => {
 }
 
 
-export const updateFeed = (dataToSubmit) => {
-    const request = axios.put('/api/feeds/:id', dataToSubmit)
+export const updateFeed = (dataToSubmit, id) => {
+    const request = axios.put(`/api/feeds/${id}`, dataToSubmit)
         .then( res => res.data );
+    
 
     return {
         type: UPDATE_FEED,

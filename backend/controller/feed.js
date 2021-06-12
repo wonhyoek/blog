@@ -72,13 +72,20 @@ exports.update = async (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
 
+
+
     try {
         
         const updateFeed = await Pool.query(
             'update Feed set title = ?, content = ? where id = ?', 
             [title, content, feedId]
         );
-        res.json({success: true});
+
+        if(updateFeed[0].affectedRows === 1){
+            res.json({success: true});
+        } else {
+            res.json({success: false});
+        }
 
     } catch (error) {
         next(error);
