@@ -39,7 +39,7 @@ export default () => {
     
     
     
-    if(feedsInReducer) {
+    if(feeds[0] !== undefined) {
         return (
             <div>
                 {renderFeeds}
