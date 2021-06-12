@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFeeds } from "../../../_actions/feed_action";
 import './LandingPage.css';
@@ -6,18 +6,22 @@ import './LandingPage.css';
 
 export default () => {
     
-    const feedsInReducer = useSelector(state => state.feed);
     const dispatch = useDispatch();
+    const [Feeds, setFeeds] = useState([]);
 
     useEffect(() => {
         
         dispatch(getFeeds())
+        .then( res => {
+            if(res.payload.feeds){
+                setFeeds(res.payload.feeds)
+            }
+        })
 
     }, []);
 
-    const feeds = feedsInReducer.feeds;
 
-    const renderFeeds = feeds && feeds.map((feed, index) => {
+    const renderFeeds = Feeds && Feeds.map((feed, index) => {
         return (
             <a href = {`/feeds/${feed.id}`} style = {{textDecoration: 'none', color: 'black'}} key = {index}>
                 <div className = 'feed_container'>
@@ -39,7 +43,7 @@ export default () => {
     
     
     
-    if(feeds[0] !== undefined) {
+    if(Feeds.length !== 0) {
         return (
             <div>
                 {renderFeeds}

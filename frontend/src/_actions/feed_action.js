@@ -33,7 +33,7 @@ export const getFeedById = (dataToSubmit) => {
 export const deleteFeed = (id) => {
     const request = axios.delete(`/api/feeds/${id}`)
         .then( res => res.data );
-        console.log(request)
+
 
     return {
         type: DELETE_FEED,
