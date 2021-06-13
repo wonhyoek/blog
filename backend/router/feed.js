@@ -80,6 +80,30 @@ router.post('/', Auth, FeedController.create);
  *                                      $ref: '#/components/schemas/Feed'
  */
 router.get('/', FeedController.read);
+
+/**
+ * @swagger
+ * /api/feeds/{id}:
+ *  get:
+ *      summary: get feed by id
+ *      tags: [Feeds]
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: feed id
+ *      responses:
+ *          200:
+ *              description: feed by id
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Feed'
+ *          404:
+ *              description: The book was not found
+ */
 router.get('/:id', FeedController.readById);
 router.put('/:id', FeedController.update);
 router.delete('/:id', FeedController.delete);
