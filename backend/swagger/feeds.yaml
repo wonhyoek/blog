@@ -1,0 +1,20 @@
+components:
+  schemas:
+    Feed:
+      type: object
+      required:
+        - title
+        - author
+        - content
+      properties:
+        id:
+          type: string
+        title: 
+          type: string
+        content: 
+          type: string
+        author:
+          type: string
+        createdAt:
+          type: string
+    

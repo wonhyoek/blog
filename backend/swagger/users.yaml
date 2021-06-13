@@ -1,0 +1,21 @@
+components:
+  schemas:
+    User:
+      type: object
+      required: 
+        - email
+        - password
+        - username
+      properties:
+        id: 
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        username:
+          type: string
+        userimage:
+          type: string
+        token:
+          type: string

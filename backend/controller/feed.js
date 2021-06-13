@@ -33,6 +33,7 @@ exports.read = async (req, res, next) => {
         );
         
         const feeds = findFeeds[0];
+        
 
         res.json({success: true, feeds});
 
