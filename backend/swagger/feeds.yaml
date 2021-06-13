@@ -6,6 +6,8 @@ components:
         - title
         - author
         - content
+        - id
+        - createdAt
       properties:
         id:
           type: string

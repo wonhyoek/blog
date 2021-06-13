@@ -54,6 +54,31 @@ const Auth = require('../middleware/auth');
   */
 
 router.post('/', Auth, FeedController.create);
+
+/**
+ * @swagger
+ * /api/feeds:
+ *  get:
+ *      summary: return list of feed
+ *      tags: [Feeds]
+ *      responses:
+ *          200:
+ *              description: The list of feed
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          required:
+ *                              - success
+ *                              - feeds
+ *                          properties:
+ *                              success:
+ *                                  type: boolean
+ *                              feeds:
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Feed'
+ */
 router.get('/', FeedController.read);
 router.get('/:id', FeedController.readById);
 router.put('/:id', FeedController.update);

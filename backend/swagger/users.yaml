@@ -6,6 +6,7 @@ components:
         - email
         - password
         - username
+        - id
       properties:
         id: 
           type: string
