@@ -23,6 +23,8 @@ export default () => {
             config
         }
 
+        
+
         dispatch(uploadUserimage(body))
         .then( res => {
             if(res.payload.success){

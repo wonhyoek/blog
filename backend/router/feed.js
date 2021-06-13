@@ -105,7 +105,77 @@ router.get('/', FeedController.read);
  *              description: The book was not found
  */
 router.get('/:id', FeedController.readById);
+
+/**
+ * @swagger
+ * /api/feeds/{id}:
+ *  put:
+ *    summary: update feed by id
+ *    tags: [Feeds]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: feed id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            required:
+ *              - title
+ *              - content
+ *            properties:
+ *              title:
+ *                 type: string
+ *              content:
+ *                 type: string
+ *    responses: 
+ *      200:
+ *        description: feed has successfully been updated
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - success
+ *              properties:
+ *                success:
+ *                  type: boolean
+ */
 router.put('/:id', FeedController.update);
+
+
+/**
+ * @swagger
+ * /api/feeds/{id}:
+ *  delete:
+ *    summary: delete feed by id
+ *    tags: [Feeds]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: feed id
+ *    responses:
+ *      200:
+ *        description: feed has successfully been deleted
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - success
+ *              properties:
+ *                success: 
+ *                  type: boolean
+ *              
+ */
 router.delete('/:id', FeedController.delete);
 
 module.exports = router;
