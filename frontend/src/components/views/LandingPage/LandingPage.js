@@ -22,7 +22,6 @@ export default () => {
 
 
     const renderFeeds = Feeds && Feeds.map((feed, index) => {
-        console.log(feed)
         return (
             <a href = {`/feeds/${feed.id}`} style = {{textDecoration: 'none', color: 'black'}} key = {index}>
                 <div className = 'feed_container'>

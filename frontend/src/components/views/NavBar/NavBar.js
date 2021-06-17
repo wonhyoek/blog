@@ -5,7 +5,7 @@ import { logoutUser } from '../../../_actions/user_action';
 
 export default () => {
 
-    const user = useSelector(state => state.user.userData);
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -32,7 +32,7 @@ export default () => {
                 </div>
             </a>
             
-                {user && !user.success ? (
+                {user && !user.isAuth ? (
                     <div style = {{display: 'flex', justifyContent: "center", 
                     alignItems: 'center', flexDirection: 'row', padding: "0px 20px"}}
                     >

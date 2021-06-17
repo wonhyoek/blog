@@ -8,7 +8,8 @@ import { uploadUserimage, updateUserimage, auth } from "../../../_actions/user_a
 export default () => {
 
     const dispatch = useDispatch();
-    const user = useSelector(state => state.user.userData);
+    const userInReducer = useSelector(state => state.user);
+    const user = userInReducer.user;
     const onDrop = useCallback((files) => {
         
         let formData = new FormData;
@@ -52,12 +53,12 @@ export default () => {
                     <div {...getRootProps()}>
                         
                             <img style = {{ width: '160px', height: '160px', borderRadius: '80px'}}
-                                src = {`http://localhost:5000/${user.user.userimage}`}
+                                src = {`http://localhost:5000/${user.userimage}`}
                             />
                             <input {...getInputProps()}/>
                     </div>
                     <div style = {{marginLeft: '20px'}}>
-                        <h2>{user.user.username}</h2>
+                        <h2>{user.username}</h2>
                     </div>
                 </div>
         </div>

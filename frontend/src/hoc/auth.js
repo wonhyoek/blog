@@ -20,6 +20,7 @@ export default (SpecificComponent, option, adminRoute = null) => {
                 } else {
                     if(option === false){
                         alert("로그인 상태에서는 접근 불가능합니다.")
+                        history.push('/');
                     }
                 }
             })

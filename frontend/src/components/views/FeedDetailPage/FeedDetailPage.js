@@ -12,7 +12,7 @@ export default () => {
 
     const feedInReducer = useSelector(state => state.feed);
     const userInReducer = useSelector( state => state.user );
-    const user = userInReducer.userData;
+    const user = userInReducer.user;
     const feed = feedInReducer.feed;
 
     useEffect(() => {
@@ -105,8 +105,8 @@ export default () => {
                         <h5>{feed.title}</h5>
                         <div>{feed.content}</div>
                     </div>
-                    { user && user.user && user.user.username === feed.author && deleteFeedButton}
-                    { user && user.user && user.user.username === feed.author && updateFeedButton}
+                    { user && user.username === feed.author && deleteFeedButton}
+                    { user && user.username === feed.author && updateFeedButton}
                 </div>
             )
         } else {

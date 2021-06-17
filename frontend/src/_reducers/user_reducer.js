@@ -9,13 +9,13 @@ import {
 export default (state = {}, action) => {
     switch(action.type){
         case LOGIN_USER:
-            return { ...state, loginSuccess: action.payload}
+            return { ...state, ...action.payload}
         case REGISTER_USER:
-            return { ...state, registerSuccess: action.payload}
+            return { ...state, ...action.payload}
         case LOGOUT_USER:
-            return { ...state, logoutSuccess: action.payload}
+            return { ...state, ...action.payload}
         case AUTH_USER:
-            return { ...state, userData: action.payload}
+            return { ...state, ...action.payload}
             break;
         default:
             return state;

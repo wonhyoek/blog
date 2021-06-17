@@ -34,7 +34,7 @@ export default () => {
         dispatch(loginUser(body))
         .then( res => {
             if(res.payload.success){
-                history.push('/');
+                history.push('/'); 
             } else {
                 alert('다시 시도해주세요');
             }
