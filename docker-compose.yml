@@ -20,12 +20,12 @@ services:
     ports: 
       - "5000:5000"
     environment: 
-      DB_HOST: $DB_HOST
-      DB_USER: $DB_USER
-      DB_PASSWORD: $DB_PASSWORD
-      DB_DEFAULT_DB: $DB_DEFAULT_DB
-      NODE_ENV: $NODE_ENV
-      MYSQL_PORT: $MYSQL_PORT
+      DB_HOST: `echo $DB_HOST`
+      DB_USER: `echo $DB_USER`
+      DB_PASSWORD: `echo $DB_PASSWORD`
+      DB_DEFAULT_DB: `echo $DB_DEFAULT_DB`
+      NODE_ENV: `echo $NODE_ENV`
+      MYSQL_PORT: `echo $MYSQL_PORT`
     
   
   nginx: 
