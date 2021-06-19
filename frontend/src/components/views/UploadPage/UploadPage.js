@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import { createFeed } from '../../../_actions/feed_action';
+import './UploadPage.css';
 
 
 export default () => {
@@ -22,6 +23,11 @@ export default () => {
 
     const onFeedSubmit = () => {
 
+        if(Title === "" || Content === ""){
+            alert('공백으로는 업로드 할 수 없습니다.');
+            return;
+        }
+
         const body = {
             title: Title,
             content: Content
@@ -41,12 +47,20 @@ export default () => {
     }
     
     return (
-        <div>
-            <form onSubmit = {onFeedSubmit}>
-                <input value = {Title} onChange = {onTitleChange} placeholder = "Title"/>
-                <input value = {Content} onChange = {onContentChange} placeholder = "Content"/>
+        <div className = 'container'>
+            <form className = 'form' onSubmit = {onFeedSubmit}>
+                <input className = 'title' 
+                    value = {Title} 
+                    onChange = {onTitleChange} 
+                    placeholder = "Title"
+                />
+                <input className = 'content'
+                    value = {Content} 
+                    onChange = {onContentChange} 
+                    placeholder = "Content"
+                />
             </form>
-            <button onClick = {onFeedSubmit}>Upload</button>
+            <button className = 'signin' onClick = {onFeedSubmit}>Upload</button>
         </div>
     )
 }

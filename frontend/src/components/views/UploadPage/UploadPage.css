@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form {
+    margin: 30px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.content {
+    height: 50px;
+}

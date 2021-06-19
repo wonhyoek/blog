@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { deleteFeed, getFeedById, updateFeed } from "../../../_actions/feed_action";
+import './FeedDetailPage.css';
 
 export default () => {
 
@@ -54,6 +55,11 @@ export default () => {
     }
 
     const onUpdateSubmit = (e) => {
+
+        if(Title === "" || Content === ""){
+            alert('공백으로는 업로드 할 수 없습니다.');
+            return;
+        }
 
         e.preventDefault();
         
