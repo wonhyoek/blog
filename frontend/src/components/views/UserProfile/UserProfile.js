@@ -29,7 +29,6 @@ export default () => {
         dispatch(uploadUserimage(body))
         .then( res => {
             if(res.payload.success){
-                console.log(res.payload.filePath);
                 dispatch(updateUserimage({userimage: res.payload.filePath}))
                 .then( res => {
                     if(res.payload.success){
