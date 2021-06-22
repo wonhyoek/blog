@@ -4,22 +4,21 @@ const UserController = require('../../controller/user');
 const Pool = require('../../mysql/pool');
 const newUser = require('../newUser.json');
 
-Pool.query = jest.fn();
-Pool.end = jest.fn();
-bcrypt.hash = jest.fn();
 
 let req, res, next;
 
 beforeEach(() => {
     req = httpMocks.createRequest();
     res = httpMocks.createResponse();
-    next = null;
+    next = jest.fn();
 })
 
 describe('UserController.create', () => {
 
     beforeEach(() => {
         req.body = newUser
+        Pool.query = jest.fn();
+        bcrypt.hash = jest.fn();
     })
 
     it('Should be a function', () => {
@@ -27,29 +26,29 @@ describe('UserController.create', () => {
     });
     it('req should have valid data', () => {
         UserController.create(req, res, next);
-        expect(req.body.userName).toBe(newUser.userName);
+        expect(req.body.username).toBe(newUser.username); 
         expect(req.body.email).toBe(newUser.email);
         expect(req.body.password).toBe(newUser.password);
     });
     it('should call Pool.query with username, email validation', async () => {
         await UserController.create(req, res, next);
-        expect(Pool.query).toBeCalledWith('select * from User where email = ?', [req.body.email]);
-        expect(Pool.query).toBeCalledWith('select * from User where username = ?', [req.body.username]);
+        expect(Pool.query).toBeCalledWith('call checkEmail(?)', [req.body.email]);
+        expect(Pool.query).toBeCalledWith('call checkUsername(?)', [req.body.username]);
     });
-    it('should return 400 response code when unvalid email and username', async () => {
-        Pool.query.mockReturnValue([[{id: 25}]]);
+    it('should return false response code when unvalid email and username', async () => {
+        const mockValue = [[{id: 23}], [{id: 54}]]
+        Pool.query.mockReturnValue(mockValue);
         await UserController.create(req, res, next);
-        expect(res.statusCode).toBe(400);
-        expect(res._getJSONData()).toStrictEqual({success: false});
-        expect(Pool.end).toBeCalled();
+        expect(res._getJSONData()).toStrictEqual({success: false, "message": "이메일과 닉네임이 이미 사용중입니다."});
     });
-    it('should call bcrypt.hash', async () => {
+    it('should call bcrypt.hash and create User', async () => {
+        const mockValue = undefined;
+        res.json = jest.fn();
+        Pool.query.mockReturnValue(mockValue);
         await UserController.create(req, res, next);
-        expect(bcrypt.hash).toBeCalledWith(req.body.password, 10);
+        expect(bcrypt.hash)
+        expect(Pool.query).toBeCalled();
+        expect(res.json).toBeCalled();
     });
-    it('should create User with Pool.query', async () => {
-        await UserController.create(req, res, next);
-        expect(Pool.query)
-        .toBeCalledWith('insert into User(username, email, password) values(?, ?, ?);');
-    })
+
 })
