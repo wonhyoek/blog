@@ -52,21 +52,26 @@ exports.login =  async (req, res, next) => {
 
     try {
         
-        const confirmUser = await Pool.query('call checkEmail(?)', [email]);
-        if(confirmUser[0][0][0] === undefined){
+        const checkEmail = await Pool.query('call checkEmail(?)', [email]);
+        if(checkEmail[0][0][0] === undefined){
             res.json({success: false, isAuth: false, message: "가입된 이메일이 존재하지 않습니다."});
         }
 
 
-        const matchPassword = bcrypt.compare(password, confirmUser[0][0].password)
+        const matchPassword = bcrypt.compare(password, checkEmail[0][0][0].password)
+
         if(matchPassword) {
-            const token = await jwt.sign(confirmUser[0][0].username, 'secret');
-            Pool.query('update User set token=? where username=?', [token, confirmUser[0][0].username])
-            .then(() => {
-                res
-                .cookie("x_auth", token)
-                .json({success: true, isAuth: true});
-            })
+
+            const token = await jwt.sign(checkEmail[0][0][0].username, 'secret');
+            const setToken = await Pool.query(
+                'call setToken(?, ?)',
+                [token, checkEmail[0][0][0].username]
+            )
+
+            res
+            .cookie("x_auth", token)
+            .json({success: true, isAuth: true});
+            
         } else {
             res.json({success: false, isAuth: false, message: "비밀번호가 맞지 않습니다."});
         }
@@ -91,7 +96,7 @@ exports.logout = async (req, res, next) => {
     
     const username = req.user.username;
 
-    Pool.query('update User set token=? where username=?', ["", username])
+    Pool.query('call setToken(?, ?)', ["", username])
     .then(() => {
         res.json({succecs: true, isAuth: false});
     })
@@ -108,12 +113,12 @@ exports.userById = async (req, res, next) => {
     
     try {
         const getUserById = await Pool.query(
-            'select * from User where id = ?',
+            'call getUserById(?)',
             [userId]
         );
-        const user = getUserById[0][0];
+        const user = getUserById[0][0][0];
 
-        if(getUserById[0][0] !== undefined){
+        if(getUserById[0][0][0] !== undefined){
             res.json({success: true, user});
         } else {
             res.json({success: false});
@@ -164,7 +169,7 @@ exports.updateUserimage = async (req, res, next) => {
 
     try {
         const updateUserimage = await Pool.query(
-            'update User set userimage = ? where id = ?',
+            'call updateUserimage(?, ?)',
             [userimage, user.id]
         );
         res.json({success: true, userimage});
