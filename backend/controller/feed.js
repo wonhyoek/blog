@@ -29,7 +29,7 @@ exports.read = async (req, res, next) => {
     try {
         
         const findFeeds = await Pool.query(
-            'select f.id, f.title, f.content, u.userimage, f.author from Feed f inner join User u on u.username = f.author;'
+            'call findFeeds()'
         );
         
         const feeds = findFeeds[0];
@@ -50,12 +50,12 @@ exports.readById = async (req, res, next) => {
     try {
         
         const findFeedById = await Pool.query(
-            'select f.id, f.title, f.content, u.userimage, f.author from Feed f inner join User u on u.username = f.author where f.  id = ?', 
+            'call findFeedById(?)', 
             [feedId]
         );
         const feed = findFeedById[0][0];
-
-        if(feed){
+        
+        if(feed.id !== undefined){
             res.json({success: true, feed});
         } else {
             res.json({success: false});
@@ -78,7 +78,7 @@ exports.update = async (req, res, next) => {
     try {
         
         const updateFeed = await Pool.query(
-            'update Feed set title = ?, content = ? where id = ?', 
+            'call updateFeed(?, ?, ?)', 
             [title, content, feedId]
         );
 
@@ -99,7 +99,7 @@ exports.delete = async (req, res, next) => {
     
     try {
         const deleteFeed = await Pool.query(
-            'delete from Feed where id = ?',
+            'call deleteFeed(?)',
             [feedId]
         );
         res.json({success: true});
