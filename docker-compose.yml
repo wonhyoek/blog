@@ -33,6 +33,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./nginx
+    volumes: 
+      - /etc/letsencrypt/live/blog.whmydeal.xyz:/etc/letsencrypt/live/blog.whmydeal.xyz
     ports: 
       - "3000:80"
     
