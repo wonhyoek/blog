@@ -25,7 +25,7 @@
 + GET /api/users/auth
 + GET /api/users/logout
 + GET /api/users/:id
-### post
+### feed
 + POST /api/feeds
 + GET /api/feeds
 + GET /api/feeds/:id
