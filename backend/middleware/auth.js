@@ -3,13 +3,14 @@ const Pool = require('../mysql/pool');
 
 module.exports = async (req, res, next) => {
 
-    const token = req.cookies.x_auth;
-    if(!token){
-        res.json({isAuth: false, message: "토큰을 넣어야 합니다."});
-    }
+    let token = req.cookies.x_auth;
+    if(!token) token = "";
+    
     try {
         
-        const decoded = await jwt.verify(token, 'secret');
+        let decoded = await jwt.verify(token, 'secret');
+        if(!decoded) decoded = "";
+
         const confirmUser = await Pool.query('select * from User where token=? and username=?'
         , [token, decoded]);
         if(confirmUser[0][0] === undefined){

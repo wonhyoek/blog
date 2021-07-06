@@ -11,24 +11,21 @@ export default () => {
     const { id } = useParams();
 
 
-    const feedInReducer = useSelector(state => state.feed);
+    const feed = useSelector(state => state.feed);
     const userInReducer = useSelector( state => state.user );
     const user = userInReducer.user;
-    const feed = feedInReducer.feed;
-
-    useEffect(() => {
-        dispatch(getFeedById({id}))
-        .then( res => {
-            setTitle(res.payload.feed.title)
-            setContent(res.payload.feed.content)
-        })
-    }, []);
-    
-    
     
     const [ToggleUpdate, setToggleUpdate] = useState(false);
     const [Title, setTitle] = useState("");
     const [Content, setContent] = useState("");
+
+    useEffect(() => {
+        dispatch(getFeedById({id}))
+        .then(res => {
+            setTitle(res.payload.feed[0].title)
+            setContent(res.payload.feed[0].content)
+        })
+    }, []);
     
     const onSetToggleUpdate = () => {
         setToggleUpdate(!ToggleUpdate);
@@ -108,8 +105,8 @@ export default () => {
                         <p>{feed.author}</p>
                     </div>
                     <div className = 'feed'>
-                        <h5>{feed.title}</h5>
-                        <div>{feed.content}</div>
+                        <h5>{Title}</h5>
+                        <div>{Content}</div>
                     </div>
                     { user && user.username === feed.author && deleteFeedButton}
                     { user && user.username === feed.author && updateFeedButton}

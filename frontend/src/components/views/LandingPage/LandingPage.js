@@ -14,7 +14,7 @@ export default () => {
         dispatch(getFeeds())
         .then( res => {
             if(res.payload.feeds){
-                setFeeds(res.payload.feeds)
+                setFeeds(res.payload.feeds[0])
             }
         })
 

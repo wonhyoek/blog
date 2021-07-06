@@ -55,7 +55,7 @@ exports.readById = async (req, res, next) => {
         );
         const feed = findFeedById[0][0];
         
-        if(feed.id !== undefined){
+        if(feed){
             res.json({success: true, feed});
         } else {
             res.json({success: false});

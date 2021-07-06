@@ -13,8 +13,8 @@ export default (state = {}, action) => {
             const feeds = action.payload.feeds
             return { ...state, feeds}
         case GET_FEED_BY_ID:
-            const feed = action.payload.feed
-            return { ...state, feed}
+            const feed = action.payload.feed[0]
+            return { ...state, ...feed}
         case DELETE_FEED:
             return { ...state, ...action.payload}
         case UPDATE_FEED:
