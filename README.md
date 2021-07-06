@@ -4,12 +4,13 @@
 + DB: Mysql 
 + backend: express 
 + frontend: react, redux 
-+ deploy: aws ec2, nginx, docker
++ deploy: aws ec2, nginx, docker, jenkins
 ## 기능 설명
 + 유저 로그인, 회원가입
 + 유저 authentication에 따른 feed CRUD
 
 # 2. 강조하고 싶은 점
++ jenkins를 이용한 ci/cd
 + Swagger를 통한 api 명세
 + docker volume을 통한 ssl 인증서 활용
 + sql injection 방어를 위한 procedure 사용(insert문에서 제대로 insertId가 반환되지 않는 버그 확인)
