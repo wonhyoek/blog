@@ -4,7 +4,7 @@
 + DB: Mysql 
 + backend: express 
 + frontend: react, redux 
-+ deploy: nginx, docker, jenkins
++ deploy: aws ec2, nginx, docker
 ## 기능 설명
 + 유저 로그인, 회원가입
 + 유저 authentication에 따른 feed CRUD
